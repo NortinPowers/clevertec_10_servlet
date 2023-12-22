@@ -13,6 +13,5 @@ create table products
             check (char_length((description)::text) >= 10),
     price       numeric                        not null
         constraint check_price
-            check (price > (0)::numeric),
-    created     timestamp with time zone       not null
+            check (price > (0)::numeric)
 );

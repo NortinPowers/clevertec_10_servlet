@@ -42,8 +42,7 @@ class ProductMapperImplTest {
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, null)
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.getName())
                     .hasFieldOrPropertyWithValue(Product.Fields.description, expected.getDescription())
-                    .hasFieldOrPropertyWithValue(Product.Fields.price, expected.getPrice())
-                    .hasFieldOrPropertyWithValue(Product.Fields.created, null);
+                    .hasFieldOrPropertyWithValue(Product.Fields.price, expected.getPrice());
         }
 
         @Test
@@ -64,8 +63,7 @@ class ProductMapperImplTest {
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, null)
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.getName())
                     .hasFieldOrPropertyWithValue(Product.Fields.description, null)
-                    .hasFieldOrPropertyWithValue(Product.Fields.price, expected.getPrice())
-                    .hasFieldOrPropertyWithValue(Product.Fields.created, null);
+                    .hasFieldOrPropertyWithValue(Product.Fields.price, expected.getPrice());
         }
 
         @Test
@@ -158,8 +156,7 @@ class ProductMapperImplTest {
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, expected.getUuid())
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.getName())
                     .hasFieldOrPropertyWithValue(Product.Fields.description, expected.getDescription())
-                    .hasFieldOrPropertyWithValue(Product.Fields.price, expected.getPrice())
-                    .hasFieldOrPropertyWithValue(Product.Fields.created, expected.getCreated());
+                    .hasFieldOrPropertyWithValue(Product.Fields.price, expected.getPrice());
         }
 
         @Test
@@ -184,8 +181,7 @@ class ProductMapperImplTest {
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, expected.getUuid())
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.getName())
                     .hasFieldOrPropertyWithValue(Product.Fields.description, expected.getDescription())
-                    .hasFieldOrPropertyWithValue(Product.Fields.price, expected.getPrice())
-                    .hasFieldOrPropertyWithValue(Product.Fields.created, expected.getCreated());
+                    .hasFieldOrPropertyWithValue(Product.Fields.price, expected.getPrice());
         }
 
         @Test
@@ -197,7 +193,6 @@ class ProductMapperImplTest {
                     .withName(null)
                     .withDescription(null)
                     .withPrice(null)
-                    .withCreated(null)
                     .build()
                     .buildProductDto();
             Product expected = ProductTestBuilder.builder()
@@ -210,8 +205,7 @@ class ProductMapperImplTest {
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, expected.getUuid())
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.getName())
                     .hasFieldOrPropertyWithValue(Product.Fields.description, expected.getDescription())
-                    .hasFieldOrPropertyWithValue(Product.Fields.price, expected.getPrice())
-                    .hasFieldOrPropertyWithValue(Product.Fields.created, expected.getCreated());
+                    .hasFieldOrPropertyWithValue(Product.Fields.price, expected.getPrice());
         }
 
         @Test
@@ -243,8 +237,7 @@ class ProductMapperImplTest {
                     .hasFieldOrPropertyWithValue(Product.Fields.uuid, expected.getUuid())
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.getName())
                     .hasFieldOrPropertyWithValue(Product.Fields.description, expected.getDescription())
-                    .hasFieldOrPropertyWithValue(Product.Fields.price, expected.getPrice())
-                    .hasFieldOrPropertyWithValue(Product.Fields.created, expected.getCreated());
+                    .hasFieldOrPropertyWithValue(Product.Fields.price, expected.getPrice());
         }
     }
 }

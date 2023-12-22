@@ -14,7 +14,7 @@ public class ProductDtoValidator {
     /**
      * Проверяет объект для сохранения, формирует список ошибок валидации при их наличии и выбрасывает исключение содержащее ошибки проверки.
      *
-     * @param productDto - проверяемый объект.
+     * @param productDto проверяемый объект.
      */
     public void validate(ProductDto productDto) {
         List<String> validateErrors = new ArrayList<>();
@@ -28,7 +28,7 @@ public class ProductDtoValidator {
     /**
      * Проверяет объект для обновления данных, формирует список ошибок валидации при их наличии и выбрасывает исключение содержащее ошибки проверки.
      *
-     * @param productDto - проверяемый объект.
+     * @param productDto проверяемый объект.
      */
     public void validateUpdated(ProductDto productDto) {
         List<String> validateErrors = new ArrayList<>();
@@ -41,7 +41,7 @@ public class ProductDtoValidator {
     /**
      * Выбрасывает исключение содержащее ошибки проверки.
      *
-     * @param validateErrors - список ошибок проверки.
+     * @param validateErrors список ошибок проверки.
      */
     private static void throwValidationExceptionInCaseError(List<String> validateErrors) {
         if (!validateErrors.isEmpty()) {
@@ -52,8 +52,8 @@ public class ProductDtoValidator {
     /**
      * Проверяет поле Price объекта по заданным требованиям.
      *
-     * @param productDto     - проверяемый объект.
-     * @param validateErrors - список ошибок проверки.
+     * @param productDto     проверяемый объект.
+     * @param validateErrors список ошибок проверки.
      */
     private static void validatePriceToNullAndCorrectValue(ProductDto productDto, List<String> validateErrors) {
         if (productDto.price() == null) {
@@ -66,8 +66,8 @@ public class ProductDtoValidator {
     /**
      * Проверяет поле Price объекта по заданным требованиям.
      *
-     * @param productDto     - проверяемый объект.
-     * @param validateErrors - список ошибок проверки.
+     * @param productDto     проверяемый объект.
+     * @param validateErrors список ошибок проверки.
      */
     private static void validateUpdatedPriceToCorrectValue(ProductDto productDto, List<String> validateErrors) {
         if (productDto.price() != null) {
@@ -78,8 +78,8 @@ public class ProductDtoValidator {
     /**
      * Проверяет поле Price объекта по заданным требованиям.
      *
-     * @param productDto     - проверяемый объект.
-     * @param validateErrors - список ошибок проверки.
+     * @param productDto     проверяемый объект.
+     * @param validateErrors список ошибок проверки.
      */
     private static void validatePriceToCorrectValue(ProductDto productDto, List<String> validateErrors) {
         if (productDto.price().compareTo(BigDecimal.ZERO) <= 0) {
@@ -90,8 +90,8 @@ public class ProductDtoValidator {
     /**
      * Проверяет поле Description объекта по заданным требованиям.
      *
-     * @param productDto     - проверяемый объект.
-     * @param validateErrors - список ошибок проверки.
+     * @param productDto     проверяемый объект.
+     * @param validateErrors список ошибок проверки.
      */
     private static void validateDescriptionToCorrect(ProductDto productDto, List<String> validateErrors) {
         if (productDto.description() != null && !productDto.description().matches(DESCRIPTION_REG_EX)) {
@@ -102,8 +102,8 @@ public class ProductDtoValidator {
     /**
      * Проверяет поле Description объекта по заданным требованиям.
      *
-     * @param productDto     - проверяемый объект.
-     * @param validateErrors - список ошибок проверки.
+     * @param productDto     проверяемый объект.
+     * @param validateErrors список ошибок проверки.
      */
     private static void validateUpdatedDescriptionToCorrect(ProductDto productDto, List<String> validateErrors) {
         if (productDto.description() != null) {
@@ -116,8 +116,8 @@ public class ProductDtoValidator {
     /**
      * Проверяет поле Name объекта по заданным требованиям.
      *
-     * @param productDto     - проверяемый объект.
-     * @param validateErrors - список ошибок проверки.
+     * @param productDto     проверяемый объект.
+     * @param validateErrors список ошибок проверки.
      */
     private static void validateNameContent(ProductDto productDto, List<String> validateErrors) {
         if (productDto.name() != null) {
@@ -129,8 +129,8 @@ public class ProductDtoValidator {
     /**
      * Проверяет поле Name объекта по заданным требованиям.
      *
-     * @param productDto     - проверяемый объект.
-     * @param validateErrors - список ошибок проверки.
+     * @param productDto     проверяемый объект.
+     * @param validateErrors список ошибок проверки.
      */
     private static void validateNameToCorrect(ProductDto productDto, List<String> validateErrors) {
         if (!productDto.name().matches("^[а-яА-Я\\s]{5,20}$")) {
@@ -141,8 +141,8 @@ public class ProductDtoValidator {
     /**
      * Проверяет поле Name объекта по заданным требованиям.
      *
-     * @param productDto     - проверяемый объект.
-     * @param validateErrors - список ошибок проверки.
+     * @param productDto     проверяемый объект.
+     * @param validateErrors список ошибок проверки.
      */
     private static void validateNameToEmpty(ProductDto productDto, List<String> validateErrors) {
         if (productDto.name().trim().isEmpty()) {
@@ -153,8 +153,8 @@ public class ProductDtoValidator {
     /**
      * Проверяет поле Name объекта по заданным требованиям.
      *
-     * @param productDto     - проверяемый объект.
-     * @param validateErrors - список ошибок проверки.
+     * @param productDto     проверяемый объект.
+     * @param validateErrors список ошибок проверки.
      */
     private static void validateNameToNull(ProductDto productDto, List<String> validateErrors) {
         if (productDto.name() == null) {

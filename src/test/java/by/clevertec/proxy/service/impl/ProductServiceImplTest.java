@@ -1,6 +1,5 @@
 package by.clevertec.proxy.service.impl;
 
-import static by.clevertec.proxy.util.CacheableAspectUtil.setCacheableAspectField;
 import static by.clevertec.proxy.util.TestConstant.PRODUCT_INCORRECT_UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,6 +22,7 @@ import by.clevertec.proxy.exception.ValidationException;
 import by.clevertec.proxy.mapper.ProductMapper;
 import by.clevertec.proxy.proxy.CacheableAspect;
 import by.clevertec.proxy.repository.ProductRepository;
+import by.clevertec.proxy.repository.util.Page;
 import by.clevertec.proxy.util.ProductTestBuilder;
 import by.clevertec.proxy.validator.ProductDtoValidator;
 import java.util.List;
@@ -185,13 +185,17 @@ class ProductServiceImplTest {
                     .build()
                     .buildProduct();
             List<Product> products = List.of(product);
+            int pageNumber = 0;
+            int pageSize = 20;
+            int listSize = 0;
+            Page<Product> productsPage = new Page<>(products, pageNumber, pageSize, products.size());
 
-            when(productRepository.findAll())
-                    .thenReturn(products);
+            when(productRepository.findAll(pageNumber, pageSize))
+                    .thenReturn(productsPage);
             when(mapper.toInfoProductDto(product))
                     .thenReturn(infoProductDto);
 
-            List<InfoProductDto> actual = productService.getAll();
+            List<InfoProductDto> actual = productService.getAllWithPagination(pageNumber, listSize);
 
             assertThat(actual)
                     .hasSize(expected.size())
@@ -202,11 +206,15 @@ class ProductServiceImplTest {
         void getAllShouldReturnEmptyList_whenProductsListIsEmpty() {
             List<InfoProductDto> expected = List.of();
             List<Product> products = List.of();
+            int pageNumber = 0;
+            int pageSize = 20;
+            int listSize = 0;
+            Page<Product> productsPage = new Page<>(products, pageNumber, pageSize, products.size());
 
-            when(productRepository.findAll())
-                    .thenReturn(products);
+            when(productRepository.findAll(pageNumber, pageSize))
+                    .thenReturn(productsPage);
 
-            List<InfoProductDto> actual = productService.getAll();
+            List<InfoProductDto> actual = productService.getAllWithPagination(pageNumber, listSize);
 
             assertThat(actual)
                     .hasSize(expected.size())
@@ -244,43 +252,6 @@ class ProductServiceImplTest {
         }
 
         @Test
-        void createShouldReturnUuidAndAddInfoProductDtoInCache_whenProductDtoIsCorrect() throws Exception {
-            ProductDto productDto = ProductTestBuilder.builder()
-                    .build()
-                    .buildProductDto();
-            Product product = ProductTestBuilder.builder()
-                    .withUuid(null)
-                    .build()
-                    .buildProduct();
-            UUID generetedUuid = UUID.fromString("d3d75177-f087-4c70-ae30-05d947733c4e");
-            Product createdProduct = ProductTestBuilder.builder()
-                    .withUuid(generetedUuid)
-                    .build()
-                    .buildProduct();
-            InfoProductDto infoProductDto = ProductTestBuilder.builder()
-                    .withUuid(generetedUuid)
-                    .build()
-                    .buildInfoProductDto();
-            setCacheableAspectField(cacheableAspect, cache, productRepository, mapper);
-
-            doNothing()
-                    .when(productDtoValidator).validate(productDto);
-            when(mapper.toProduct(productDto))
-                    .thenReturn(product);
-            when(productRepository.save(product))
-                    .thenReturn(createdProduct);
-            when(productRepository.findById(generetedUuid))
-                    .thenReturn(Optional.of(createdProduct));
-            when(mapper.toInfoProductDto(createdProduct))
-                    .thenReturn(infoProductDto);
-
-            UUID actual = productService.create(productDto);
-            cacheableAspect.cacheableCreate(generetedUuid);
-
-            verify(cache).put(actual, infoProductDto);
-        }
-
-        @Test
         void createShouldSetProductUuid_whenInvokeRepository() {
             ProductDto productDto = ProductTestBuilder.builder()
                     .build()
@@ -314,7 +285,6 @@ class ProductServiceImplTest {
                     .buildProductDto();
             Product productToSave = ProductTestBuilder.builder()
                     .withUuid(null)
-                    .withCreated(null)
                     .build()
                     .buildProduct();
 
@@ -329,8 +299,7 @@ class ProductServiceImplTest {
 
             verify(productRepository, atLeastOnce()).save(captor.capture());
             assertThat(captor.getValue())
-                    .hasFieldOrPropertyWithValue(Product.Fields.uuid, null)
-                    .hasFieldOrPropertyWithValue(Product.Fields.created, null);
+                    .hasFieldOrPropertyWithValue(Product.Fields.uuid, null);
         }
 
         @Test

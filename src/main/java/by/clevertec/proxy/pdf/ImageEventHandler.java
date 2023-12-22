@@ -1,6 +1,7 @@
 package by.clevertec.proxy.pdf;
 
 import static by.clevertec.proxy.util.LogUtil.getErrorMessageToLog;
+import static by.clevertec.proxy.util.PrintUtil.addEmptyLine;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -51,11 +52,11 @@ public class ImageEventHandler extends PdfPageEventHelper {
     /**
      * Настраивает фон исходя из типа файла подложки (rev.1 - jpg / pdf).
      *
-     * @param writer   - объект для чтения PDF-документа
-     * @param document - текущий создаваемый документ
-     * @param path     - адрес ресурса фона
-     * @throws IOException       - выбрасываемое исключение
-     * @throws DocumentException - выбрасываемое исключен
+     * @param writer   объект для чтения PDF-документа
+     * @param document текущий создаваемый документ
+     * @param path     адрес ресурса фона
+     * @throws IOException       выбрасываемое исключение
+     * @throws DocumentException выбрасываемое исключен
      */
     private void setBackgroundByType(PdfWriter writer, Document document, String path) throws IOException, DocumentException {
         if (path.endsWith(".jpg")) {
@@ -69,18 +70,6 @@ public class ImageEventHandler extends PdfPageEventHelper {
             PdfImportedPage page = writer.getImportedPage(reader, 1);
             PdfContentByte canvas = writer.getDirectContentUnder();
             canvas.addTemplate(page, 0, 0);
-        }
-    }
-
-    /**
-     * Добавляет пустые строки.
-     *
-     * @param paragraph - текстовый блок
-     * @param number    - количество необходимых пустых строк
-     */
-    private void addEmptyLine(Paragraph paragraph, int number) {
-        for (int i = 0; i < number; i++) {
-            paragraph.add(new Paragraph(" "));
         }
     }
 }

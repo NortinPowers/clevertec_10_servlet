@@ -10,3 +10,6 @@ Cache:
   algorithm: LRU #по умолчанию LRU
 #  algoritm: LFU
   maxCollectionSize: 100
+
+Flyway:
+  enabled: true

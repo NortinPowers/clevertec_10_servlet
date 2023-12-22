@@ -1,11 +1,10 @@
 package by.clevertec.proxy.pdf;
 
-import static by.clevertec.proxy.util.Constants.BACKGROUND_IMG;
-import static by.clevertec.proxy.util.Constants.BACKGROUND_PATH;
 import static by.clevertec.proxy.util.Constants.DATA_REPORT_FORMAT;
 import static by.clevertec.proxy.util.Constants.REPORT_DIR;
 import static by.clevertec.proxy.util.Constants.USER_DIR;
 import static by.clevertec.proxy.util.LogUtil.getErrorMessageToLog;
+import static by.clevertec.proxy.util.PrintUtil.getPath;
 
 import by.clevertec.proxy.data.InfoProductDto;
 import com.itextpdf.text.Chunk;
@@ -20,33 +19,30 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
-import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 
-@UtilityClass
 @Log4j2
 public class PdfPrinter {
 
     /**
      * Создает PDF-документ на основе переданного объекта.
      *
-     * @param object - контент документа
-     * @param <T>    - тип объекта
+     * @param object контент документа
+     * @param <T>    тип объекта
      */
-    public static <T> void createPdf(T object) {
+    public <T> void createPdf(T object) {
         fillDocument(object);
     }
 
     /**
      * Заполняет документ контентом.
      *
-     * @param object - контент документа
-     * @param <T>    - тип объекта
+     * @param object контент документа
+     * @param <T>    тип объекта
      * @throws RuntimeException - выбрасываемое исключение
      */
     private <T> void fillDocument(T object) {
@@ -67,19 +63,9 @@ public class PdfPrinter {
     }
 
     /**
-     * Возвращает путь к изображению подложки.
-     *
-     * @return Path - объект указания местоположения
-     * @throws URISyntaxException - выбрасываемое исключение
-     */
-    private Path getPath() throws URISyntaxException {
-        return Paths.get(ClassLoader.getSystemResource(BACKGROUND_PATH + BACKGROUND_IMG).toURI());
-    }
-
-    /**
      * Возвращает шрифт для документа.
      *
-     * @return Font - объект с характеристиками шрифта
+     * @return Font объект с характеристиками шрифта
      */
     private Font getFont() {
         return FontFactory.getFont(FontFactory.HELVETICA, "windows-1251", 13);
@@ -88,12 +74,12 @@ public class PdfPrinter {
     /**
      * Задает обработчик для обработки каждого нового листа документа.
      *
-     * @param document - создаваемый документ
-     * @param filePath - путь к папке сохранения документа
-     * @param path     - объект указания местоположения к изображению подложки
-     * @param font     - объект шрифта создаваемого документа
-     * @throws DocumentException     - выбрасываемое исключение
-     * @throws FileNotFoundException - выбрасываемое исключение
+     * @param document создаваемый документ
+     * @param filePath путь к папке сохранения документа
+     * @param path     объект указания местоположения к изображению подложки
+     * @param font     объект шрифта создаваемого документа
+     * @throws DocumentException     выбрасываемое исключение
+     * @throws FileNotFoundException выбрасываемое исключение
      */
     private void setNewPageEvent(Document document, String filePath, Path path, Font font) throws DocumentException, FileNotFoundException {
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
@@ -104,10 +90,10 @@ public class PdfPrinter {
     /**
      * Задает контент в зависимости от переданного объекта.
      *
-     * @param object   - контент документа
-     * @param font     - объект с характеристиками шрифта
-     * @param document - создаваемый документ
-     * @param <T>      - тип объекта контента
+     * @param object   контент документа
+     * @param font     объект с характеристиками шрифта
+     * @param document создаваемый документ
+     * @param <T>      тип объекта контента
      * @throws DocumentException - выбрасываемое исключение
      */
     private <T> void setContentValue(T object, Font font, Document document) throws DocumentException {
@@ -122,7 +108,7 @@ public class PdfPrinter {
     /**
      * Возвращает путь документа для сохранения.
      *
-     * @return String - путь к сохраняемому документу
+     * @return String путь к сохраняемому документу
      */
     private String getFilePath() {
         String projectPath = System.getProperty(USER_DIR);
@@ -133,9 +119,9 @@ public class PdfPrinter {
     /**
      * Создает текстовый элемент в зависимости от контента.
      *
-     * @param object - контент документа
-     * @param <T>    - тип объекта контента
-     * @return Chunk - текстовый элемент
+     * @param object контент документа
+     * @param <T>    тип объекта контента
+     * @return Chunk текстовый элемент
      */
     private <T> Chunk getChunk(T object) {
         Chunk chunk = null;
@@ -153,10 +139,10 @@ public class PdfPrinter {
     /**
      * Возвращает StringBuilder-строку из списка.
      *
-     * @param list - список объектов для контента
-     * @return StringBuilder - строка из списка
+     * @param list список объектов для контента
+     * @return StringBuilder строка из списка
      */
-    private StringBuilder getStringBuilderByList(List list) {
+    private StringBuilder getStringBuilderByList(List<Object> list) {
         StringBuilder builder = new StringBuilder();
         for (Object element : list) {
             builder

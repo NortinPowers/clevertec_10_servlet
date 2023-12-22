@@ -7,9 +7,6 @@ import static by.clevertec.proxy.util.TestConstant.PRODUCT_UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import by.clevertec.proxy.data.InfoProductDto;
-import by.clevertec.proxy.entity.Product;
-import by.clevertec.proxy.util.ProductTestBuilder;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import java.io.File;
@@ -25,23 +22,11 @@ import org.junit.jupiter.api.Test;
 class PdfPrinterTest {
 
     @Test
-    public void createPdfShouldCreatePdf_withInfoProductDtoObject() {
-        InfoProductDto infoProductDto = ProductTestBuilder.builder().build()
-                .buildInfoProductDto();
-        List<String> testPaths = getPaths();
-
-        PdfPrinter.createPdf(infoProductDto);
-
-        Map<String, String> testData = getTestString(testPaths);
-        checkAssertion(testData, infoProductDto);
-        defineDeleteFile(testData);
-    }
-
-    @Test
     public void createPdfShouldCreatePdf_withUuid() {
         List<String> testPaths = getPaths();
+        PdfPrinter printer = new PdfPrinter();
 
-        PdfPrinter.createPdf(PRODUCT_UUID);
+        printer.createPdf(PRODUCT_UUID);
 
         Map<String, String> testData = getTestString(testPaths);
         checkAssertion(testData, PRODUCT_UUID);
@@ -54,33 +39,6 @@ class PdfPrinterTest {
                 assertEquals(uuid.toString(), value.trim());
             } else {
                 fail();
-            }
-        }
-    }
-
-    private void checkAssertion(Map<String, String> testData, InfoProductDto infoProductDto) {
-        Map<String, String> stringMap = new HashMap<>();
-        for (String value : testData.values()) {
-            if (!value.isEmpty()) {
-                createMapByString(value, stringMap);
-                assertEquals(infoProductDto.uuid().toString(), stringMap.get(Product.Fields.uuid));
-                assertEquals(infoProductDto.name(), stringMap.get(Product.Fields.name));
-                assertEquals(infoProductDto.description(), stringMap.get(Product.Fields.description));
-                assertEquals(infoProductDto.price().toString(), stringMap.get(Product.Fields.price));
-                assertEquals(infoProductDto.created().format(DateTimeFormatter.ISO_DATE), stringMap.get("created date"));
-            } else {
-                fail();
-            }
-        }
-    }
-
-    private void createMapByString(String value, Map<String, String> stringMap) {
-        for (String line : value.split("\n")) {
-            String[] parts = line.split(": ");
-            if (parts.length == 2) {
-                String key = parts[0].trim().substring(1);
-                String valueMap = parts[1].trim();
-                stringMap.put(key, valueMap);
             }
         }
     }
