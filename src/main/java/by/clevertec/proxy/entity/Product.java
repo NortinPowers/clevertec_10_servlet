@@ -1,7 +1,6 @@
 package by.clevertec.proxy.entity;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,9 +34,4 @@ public class Product {
      * Не может быть null и должен быть положительным.
      */
     private BigDecimal price;
-
-    /**
-     * Время создания, не может быть null(задаётся до сохранения и не обновляется).
-     */
-    private LocalDateTime created;
 }

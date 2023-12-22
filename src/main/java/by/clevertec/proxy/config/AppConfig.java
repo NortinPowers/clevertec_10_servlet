@@ -31,7 +31,7 @@ public class AppConfig {
     /**
      * Метод возвращает ключ-значение из config Map по ключу.
      *
-     * @param key - ключ значения
+     * @param key ключ значения
      * @return Map of String/Object - ключ-значение
      */
     public Map<String, Object> getProperty(String key) {

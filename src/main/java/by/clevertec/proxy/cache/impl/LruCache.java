@@ -24,8 +24,8 @@ public class LruCache<K, V> implements Cache<K, V> {
     /**
      * Кладет в Map кэша объект.
      *
-     * @param key   - ключ объекта для Map кэша.
-     * @param value - объект по ключу в Map кэша.
+     * @param key   ключ объекта для Map кэша.
+     * @param value объект по ключу в Map кэша.
      */
     @Override
     public void put(K key, V value) {
@@ -35,7 +35,7 @@ public class LruCache<K, V> implements Cache<K, V> {
     /**
      * Возвращает объект по ключу из Map кэша.
      *
-     * @param key - ключ объекта для Map кэша.
+     * @param key ключ объекта для Map кэша.
      * @return объект по переданному в Map ключу.
      */
     @Override
@@ -46,7 +46,7 @@ public class LruCache<K, V> implements Cache<K, V> {
     /**
      * Удаляет объект по ключу из Map кэша.
      *
-     * @param key - ключ удаляемого объекта для Map.
+     * @param key ключ удаляемого объекта для Map.
      */
     @Override
     public void remove(K key) {

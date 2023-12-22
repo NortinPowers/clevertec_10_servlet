@@ -8,7 +8,6 @@ import by.clevertec.proxy.data.InfoProductDto;
 import by.clevertec.proxy.data.ProductDto;
 import by.clevertec.proxy.entity.Product;
 import by.clevertec.proxy.exception.ProductNotFoundException;
-import by.clevertec.proxy.mapper.ProductMapper;
 import by.clevertec.proxy.mapper.ProductMapperImpl;
 import by.clevertec.proxy.repository.ProductRepository;
 import by.clevertec.proxy.repository.impl.ProductRepositoryImpl;
@@ -27,7 +26,7 @@ public class CacheableAspect {
 
     private Cache<UUID, Object> cache = configureCache();
     private final ProductRepository productRepository = new ProductRepositoryImpl();
-    private final ProductMapper mapper = new ProductMapperImpl();
+    private final ProductMapperImpl mapper = new ProductMapperImpl();
 
     @SuppressWarnings("checkstyle:IllegalCatch")
     @Around("@annotation(by.clevertec.proxy.proxy.Cacheable) && execution(* by.clevertec.proxy.service.impl.ProductServiceImpl.get(..))")
@@ -66,6 +65,12 @@ public class CacheableAspect {
         cache.put(uuid, mapper.toInfoProductDto(product));
     }
 
+    /**
+     * Конфигурирует и возвращает кэш на основе параметров, указанных в конфигурации.
+     * Если кэш уже сконфигурирован, он возвращается без изменений.
+     *
+     * @return сконфигурированный кэш, основанный на параметрах из конфигурации.
+     */
     private Cache<UUID, Object> configureCache() {
         if (cache == null) {
             synchronized (this) {

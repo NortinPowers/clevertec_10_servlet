@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "2ecea286-a62f-494b-a7ab-a9732c496e40",
+		"name": "Clevertec Servlet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25542323"
+	},
+	"item": [
+		{
+			"name": "products-200",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "products-200_pageSize=10",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products?pageNumber=0&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "0"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "receiptWithParamUuid-200",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/receipt?uuid=021652ee-06bb-4bc6-a70c-2b99bee7eca3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipt"
+					],
+					"query": [
+						{
+							"key": "uuid",
+							"value": "021652ee-06bb-4bc6-a70c-2b99bee7eca3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "receiptWithoutParamUuid-400",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/receipt?uuid=021652ee-06bb-4bc6-a70c-2b99bee7eca3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipt"
+					],
+					"query": [
+						{
+							"key": "uuid",
+							"value": "021652ee-06bb-4bc6-a70c-2b99bee7eca3"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,5 +1,7 @@
 package by.clevertec.proxy.service.impl;
 
+import static by.clevertec.proxy.util.Constants.DEFAULT_PAGE_SIZE;
+
 import by.clevertec.proxy.data.InfoProductDto;
 import by.clevertec.proxy.data.ProductDto;
 import by.clevertec.proxy.entity.Product;
@@ -30,8 +32,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<InfoProductDto> getAll() {
-        List<Product> products = productRepository.findAll();
+    public List<InfoProductDto> getAllWithPagination(int pageNumber, int pageSize) {
+        int page = 0;
+        if (pageSize == 0) {
+            page = DEFAULT_PAGE_SIZE;
+        }
+        List<Product> products = productRepository.findAll(pageNumber, page).getContent();
         return products.stream()
                 .map(mapper::toInfoProductDto)
                 .toList();

@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import by.clevertec.proxy.entity.Product;
+import by.clevertec.proxy.repository.util.Page;
 import by.clevertec.proxy.util.ProductTestBuilder;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterAll;
@@ -54,9 +54,12 @@ class ProductRepositoryImplTest {
 
     @Test
     void findAllShouldReturnList_whenCalled() {
-        List<Product> actual = productRepository.findAll();
+        int pageNumber = 0;
+        int pageSize = 20;
 
-        assertEquals(2, actual.size());
+        Page<Product> actual = productRepository.findAll(pageNumber, pageSize);
+
+        assertEquals(2, actual.getContent().size());
     }
 
     @Nested
@@ -75,8 +78,7 @@ class ProductRepositoryImplTest {
                     .hasNoNullFieldsOrPropertiesExcept(Product.Fields.uuid)
                     .hasFieldOrPropertyWithValue(Product.Fields.name, expected.getName())
                     .hasFieldOrPropertyWithValue(Product.Fields.description, expected.getDescription())
-                    .hasFieldOrPropertyWithValue(Product.Fields.price, expected.getPrice())
-                    .hasNoNullFieldsOrPropertiesExcept(Product.Fields.created);
+                    .hasFieldOrPropertyWithValue(Product.Fields.price, expected.getPrice());
 
         }
 
@@ -92,8 +94,7 @@ class ProductRepositoryImplTest {
                     .hasNoNullFieldsOrPropertiesExcept(Product.Fields.uuid)
                     .hasFieldOrPropertyWithValue(Product.Fields.name, product.getName())
                     .hasFieldOrPropertyWithValue(Product.Fields.description, product.getDescription())
-                    .hasFieldOrPropertyWithValue(Product.Fields.price, product.getPrice())
-                    .hasFieldOrPropertyWithValue(Product.Fields.created, product.getCreated());
+                    .hasFieldOrPropertyWithValue(Product.Fields.price, product.getPrice());
             assertNotEquals(product.getUuid(), actual.getUuid());
         }
     }

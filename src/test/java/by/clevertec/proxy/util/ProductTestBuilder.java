@@ -1,6 +1,5 @@
 package by.clevertec.proxy.util;
 
-import static by.clevertec.proxy.util.TestConstant.PRODUCT_CREATED_DATE;
 import static by.clevertec.proxy.util.TestConstant.PRODUCT_DESCRIPTION;
 import static by.clevertec.proxy.util.TestConstant.PRODUCT_NAME;
 import static by.clevertec.proxy.util.TestConstant.PRODUCT_PRICE;
@@ -10,7 +9,6 @@ import by.clevertec.proxy.data.InfoProductDto;
 import by.clevertec.proxy.data.ProductDto;
 import by.clevertec.proxy.entity.Product;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
@@ -31,11 +29,8 @@ public class ProductTestBuilder {
     @Builder.Default
     private BigDecimal price = PRODUCT_PRICE;
 
-    @Builder.Default
-    private LocalDateTime created = PRODUCT_CREATED_DATE;
-
     public Product buildProduct() {
-        return new Product(uuid, name, description, price, created);
+        return new Product(uuid, name, description, price);
     }
 
     public ProductDto buildProductDto() {
@@ -43,6 +38,6 @@ public class ProductTestBuilder {
     }
 
     public InfoProductDto buildInfoProductDto() {
-        return new InfoProductDto(uuid, name, description, price, created);
+        return new InfoProductDto(uuid, name, description, price);
     }
 }

@@ -1,7 +1,6 @@
 package by.clevertec.proxy.util;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.experimental.UtilityClass;
 
@@ -16,7 +15,6 @@ public class TestConstant {
     public static final String NEW_PRODUCT_DESCRIPTION = "устройство создающее порталы";
     public static final BigDecimal PRODUCT_PRICE = BigDecimal.TEN;
     public static final BigDecimal NEW_PRODUCT_PRICE = BigDecimal.valueOf(11);
-    public static final LocalDateTime PRODUCT_CREATED_DATE = LocalDateTime.of(2023, 10, 28, 11, 17, 0);
     public static final String TEST_IMG_PATH = "src/test/resources/static/img/testImg.jpg";
     public static final String TEST_PDF_PATH = "src/test/resources/static/pdf/testPdf.pdf";
 }
