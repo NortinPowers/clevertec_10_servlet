@@ -1,6 +1,6 @@
 <h1 align="center">Clevertec course<h1>
-<h2 align="center">Servlet</h2>
-<h3>Описание задачи</h3>
+<h2 align="center">Servlet / Springframework</h2>
+<h3>Описание задачи - Servlet</h3>
 
 - Взять за основу проект из лекции паттернов
 - Придерживаться GitFlow: master -> develop -> feature/fix
@@ -21,3 +21,12 @@
 <h3>Контрольные точки</h3>
 
 - Развертывание базы данных происходит при установке ключа enabled: true в секции Flyway: файла конфигурации application.yaml (src/main/resources/application.yaml) при подъеме приложения
+
+<h3>Описание задачи - Springframework</h3>
+
+- Взять за основу проект от задачи Servlet
+- Переписать его используя Springframework
+
+<h3>Примечания</h3>
+
+1. Для запуска проекта используйте шаги описанные в вышеописанной задачи по Servlet

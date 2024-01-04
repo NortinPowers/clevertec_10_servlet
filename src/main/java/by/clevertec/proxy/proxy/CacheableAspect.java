@@ -1,32 +1,29 @@
 package by.clevertec.proxy.proxy;
 
 import by.clevertec.proxy.cache.Cache;
-import by.clevertec.proxy.cache.impl.LfuCache;
-import by.clevertec.proxy.cache.impl.LruCache;
-import by.clevertec.proxy.config.AppConfig;
 import by.clevertec.proxy.data.InfoProductDto;
 import by.clevertec.proxy.data.ProductDto;
 import by.clevertec.proxy.entity.Product;
 import by.clevertec.proxy.exception.ProductNotFoundException;
-import by.clevertec.proxy.mapper.ProductMapperImpl;
+import by.clevertec.proxy.mapper.ProductMapper;
 import by.clevertec.proxy.repository.ProductRepository;
-import by.clevertec.proxy.repository.impl.ProductRepositoryImpl;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 
+@Component
 @Aspect
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class CacheableAspect {
 
-    private Cache<UUID, Object> cache = configureCache();
-    private final ProductRepository productRepository = new ProductRepositoryImpl();
-    private final ProductMapperImpl mapper = new ProductMapperImpl();
+    private final ProductRepository productRepository;
+    private final ProductMapper mapper;
+    private final Cache<UUID, Object> cache;
 
     @SuppressWarnings("checkstyle:IllegalCatch")
     @Around("@annotation(by.clevertec.proxy.proxy.Cacheable) && execution(* by.clevertec.proxy.service.impl.ProductServiceImpl.get(..))")
@@ -63,28 +60,5 @@ public class CacheableAspect {
     public void cacheableUpdate(UUID uuid, ProductDto productDto) {
         Product product = productRepository.findById(uuid).orElseThrow(() -> new ProductNotFoundException(uuid));
         cache.put(uuid, mapper.toInfoProductDto(product));
-    }
-
-    /**
-     * Конфигурирует и возвращает кэш на основе параметров, указанных в конфигурации.
-     * Если кэш уже сконфигурирован, он возвращается без изменений.
-     *
-     * @return сконфигурированный кэш, основанный на параметрах из конфигурации.
-     */
-    private Cache<UUID, Object> configureCache() {
-        if (cache == null) {
-            synchronized (this) {
-                AppConfig appConfig = new AppConfig();
-                Map<String, Object> databaseProperties = appConfig.getProperty("Cache");
-                String algorithm = (String) databaseProperties.get("algorithm");
-                Integer maxCollectionSize = (Integer) databaseProperties.get("maxCollectionSize");
-                if ("LFU".equals(algorithm)) {
-                    cache = new LfuCache<>(maxCollectionSize);
-                } else {
-                    cache = new LruCache<>(maxCollectionSize);
-                }
-            }
-        }
-        return cache;
     }
 }

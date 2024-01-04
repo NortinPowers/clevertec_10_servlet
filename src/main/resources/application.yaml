@@ -8,7 +8,7 @@ database:
 
 Cache:
   algorithm: LRU #по умолчанию LRU
-#  algoritm: LFU
+  #  algoritm: LFU
   maxCollectionSize: 100
 
 Flyway:

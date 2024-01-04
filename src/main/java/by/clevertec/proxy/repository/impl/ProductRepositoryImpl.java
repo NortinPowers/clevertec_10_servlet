@@ -4,8 +4,6 @@ import static by.clevertec.proxy.util.LogUtil.getErrorMessageToLog;
 
 import by.clevertec.proxy.entity.Product;
 import by.clevertec.proxy.repository.ProductRepository;
-import by.clevertec.proxy.repository.util.DataSource;
-import by.clevertec.proxy.repository.util.LocalDateTimeProcessor;
 import by.clevertec.proxy.repository.util.LocalDateTimeRowProcessor;
 import by.clevertec.proxy.repository.util.Page;
 import java.lang.reflect.Field;
@@ -13,16 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
+import org.springframework.stereotype.Repository;
 
 @Log4j2
-@AllArgsConstructor
+@Repository
+@RequiredArgsConstructor
 public class ProductRepositoryImpl implements ProductRepository {
 
     private static final String GET_ALL_PRODUCTS = "select * from products";
@@ -31,10 +31,8 @@ public class ProductRepositoryImpl implements ProductRepository {
     private static final String DELETE_PRODUCT = "delete from products where uuid = ?";
     private static final String UPDATE_PRODUCT = "update products set name = ?, description = ?, price = ? where uuid = ?";
 
-    private final BasicDataSource dataSource = DataSource.getDataSource();
-    private final QueryRunner queryRunner = new QueryRunner(dataSource);
-    private final LocalDateTimeProcessor columnProcessor = new LocalDateTimeProcessor();
-    private final LocalDateTimeRowProcessor rowProcessor = new LocalDateTimeRowProcessor(columnProcessor);
+    private final QueryRunner queryRunner;
+    private final LocalDateTimeRowProcessor rowProcessor;
 
     @Override
     public Optional<Product> findById(UUID uuid) {

@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'war'
     id "io.freefair.lombok" version "8.3"
-    id "io.freefair.aspectj.post-compile-weaving" version "8.4"
 }
 
 group = 'by.clevertec.proxy'
@@ -33,6 +32,7 @@ ext {
     jacksonVersion = '2.16.0'
     flywaydbVersion = '10.3.0'
     servletVersion = '6.0.0'
+    springframeworkVersion = '6.1.2'
 }
 
 compileJava {
@@ -56,6 +56,11 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
     implementation "org.flywaydb:flyway-core:${flywaydbVersion}"
+    implementation "org.springframework:spring-context:${springframeworkVersion}"
+    implementation "org.springframework:spring-core:${springframeworkVersion}"
+    implementation "org.springframework:spring-web:${springframeworkVersion}"
+    implementation "org.springframework:spring-webmvc:${springframeworkVersion}"
+    implementation "org.springframework:spring-aspects:${springframeworkVersion}"
 
     runtimeOnly "org.flywaydb:flyway-database-postgresql:${flywaydbVersion}"
 
@@ -67,6 +72,7 @@ dependencies {
 
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
+    testImplementation "org.springframework:spring-test:${springframeworkVersion}"
     testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
     testImplementation platform ("org.junit:junit-bom:${junitVersion}")
     testImplementation 'org.junit.jupiter:junit-jupiter'
