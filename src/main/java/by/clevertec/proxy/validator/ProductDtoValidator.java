@@ -5,7 +5,9 @@ import by.clevertec.proxy.exception.ValidationException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductDtoValidator {
 
     public static final String INCORRECT_DESCRIPTION_MESSAGE = "incorrect product description";

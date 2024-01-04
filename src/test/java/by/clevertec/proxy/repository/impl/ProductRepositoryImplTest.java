@@ -11,25 +11,30 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import by.clevertec.proxy.config.SpringConfig;
 import by.clevertec.proxy.entity.Product;
 import by.clevertec.proxy.repository.util.Page;
 import by.clevertec.proxy.util.ProductTestBuilder;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+@SpringJUnitConfig
+@ContextConfiguration(classes = SpringConfig.class)
 class ProductRepositoryImplTest {
 
-    private static ProductRepositoryImpl productRepository;
+    @Autowired
+    private ProductRepositoryImpl productRepository;
 
-    @BeforeAll
-    public static void init() {
+    @BeforeEach
+    public void init() {
         executeScript(SCRIPT_FILE_INIT);
-        productRepository = new ProductRepositoryImpl();
         productRepository.setDataSource(getDataSource());
     }
 

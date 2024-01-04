@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
@@ -33,11 +35,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<InfoProductDto> getAllWithPagination(int pageNumber, int pageSize) {
-        int page = 0;
+        int size;
         if (pageSize == 0) {
-            page = DEFAULT_PAGE_SIZE;
+            size = DEFAULT_PAGE_SIZE;
+        } else {
+            size = pageSize;
         }
-        List<Product> products = productRepository.findAll(pageNumber, page).getContent();
+        List<Product> products = productRepository.findAll(pageNumber, size).getContent();
         return products.stream()
                 .map(mapper::toInfoProductDto)
                 .toList();

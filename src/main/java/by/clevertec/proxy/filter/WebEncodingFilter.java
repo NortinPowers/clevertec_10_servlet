@@ -11,7 +11,9 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.annotation.WebInitParam;
 import java.io.IOException;
+import org.springframework.stereotype.Component;
 
+@Component
 @WebFilter(urlPatterns = "/*", initParams = {@WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding params")})
 public class WebEncodingFilter implements Filter {
 
@@ -24,7 +26,7 @@ public class WebEncodingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if (!encoding.equals(request.getCharacterEncoding())) {
+        if (encoding != null && !encoding.equals(request.getCharacterEncoding())) {
             request.setCharacterEncoding(encoding);
             response.setCharacterEncoding(encoding);
             response.setContentType(MEDIA_TYPE_JSON);

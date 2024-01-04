@@ -1,30 +1,27 @@
 package by.clevertec.proxy.servlet;
 
-import static by.clevertec.proxy.util.Constants.PRODUCTS_HELPER;
-
 import by.clevertec.proxy.util.helper.ProductHelper;
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@WebServlet("/products/receipt")
+@Controller
 @Log4j2
+@RequiredArgsConstructor
+@RequestMapping("/products")
 public class ReceiptServlet extends HttpServlet {
 
-    private ProductHelper productHelper;
+    private final ProductHelper productHelper;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        productHelper = (ProductHelper) config.getServletContext().getAttribute(PRODUCTS_HELPER);
-    }
-
-    @Override
+    @GetMapping("/receipt")
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         productHelper.setProductsReceiptGetResponse(req, resp);
     }

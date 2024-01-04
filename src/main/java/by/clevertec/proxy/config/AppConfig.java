@@ -3,9 +3,11 @@ package by.clevertec.proxy.config;
 import java.io.InputStream;
 import java.util.Map;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 import org.yaml.snakeyaml.Yaml;
 
 @Log4j2
+@Component
 public class AppConfig {
 
     private static final String CONFIG_FILE = "application.yaml";

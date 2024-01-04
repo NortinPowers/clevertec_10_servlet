@@ -21,11 +21,13 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 
-@AllArgsConstructor
 @Log4j2
+@Component
+@RequiredArgsConstructor
 public class ProductHelper {
 
     private final ProductService productService;
